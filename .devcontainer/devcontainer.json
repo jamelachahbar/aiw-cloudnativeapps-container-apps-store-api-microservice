@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.205.0/containers/dapr-dotnet
 {
-	"name": "aiw-container-app-demo",
+	"name": "aiwcloudnative-container-app-demo",
 	"dockerFile": "Dockerfile",
 	"runArgs": ["--init", "--privileged"],
 	"mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
