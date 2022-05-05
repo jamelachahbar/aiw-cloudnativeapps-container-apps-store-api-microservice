@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=./build.yaml
-name: Build and Deploy AIW Cloud Native Demo09052022
+name: Build and Deploy AIW Cloud Native Demo-09052022
 on:
   push:
     branches: [main]
