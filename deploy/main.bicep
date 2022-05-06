@@ -134,7 +134,7 @@ resource stateDaprComponentswap 'Microsoft.App/managedEnvironments/daprComponent
     secrets: [
       {
         name: 'accountKey'
-        value: ''
+        value: 'dODZJ69+1QXSv9AMqkHS5tK0x88lqwTFWY92WmsRbTU1ObX1401TyjL2XFRmQdhXazPT9hYyl3vtYXfih/Ir6g=='
       }
     ]
     metadata: [
