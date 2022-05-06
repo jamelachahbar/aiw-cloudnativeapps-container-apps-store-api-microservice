@@ -133,9 +133,13 @@ resource stateDaprComponentswap 'Microsoft.App/managedEnvironments/daprComponent
     version: 'v1'
     secrets: [
       {
-        name: 'accountKey'
-        value: 'dODZJ69+1QXSv9AMqkHS5tK0x88lqwTFWY92WmsRbTU1ObX1401TyjL2XFRmQdhXazPT9hYyl3vtYXfih/Ir6g=='
+        name: 'azureClientSecret'
+        value: 'Wy38Q~V9uQS1d29jeuibcNWr6cYAdRL26ak_CcBh'
       }
+      // {
+      //   name: 'accountKey'
+      //   value: 'dODZJ69+1QXSv9AMqkHS5tK0x88lqwTFWY92WmsRbTU1ObX1401TyjL2XFRmQdhXazPT9hYyl3vtYXfih/Ir6g=='
+      // }
     ]
     metadata: [
       {
@@ -145,6 +149,14 @@ resource stateDaprComponentswap 'Microsoft.App/managedEnvironments/daprComponent
       {
         name: 'containerName'
         value: 'orders'
+      }
+      {
+        name: 'azureTenantId'
+        value: 'f9bea68d-52c6-4576-b498-8615d9478de0'
+      }
+      {
+        name: 'azureClientId'
+        value: 'b7c31977-72eb-426e-9453-dcc2eb8bc936'
       }
     ]
     scopes: [
