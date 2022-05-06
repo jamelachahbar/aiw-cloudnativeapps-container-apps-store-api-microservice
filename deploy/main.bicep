@@ -3,7 +3,7 @@ param environmentName string = 'env-${uniqueString(resourceGroup().id)}'
 
 param minReplicas int = 0
 
-param nodeImage string 
+param nodeImage string
 param nodePort int = 3000
 var nodeServiceAppName = 'node-app'
 
@@ -24,7 +24,6 @@ param containerRegistryUsername string = 'testUser'
 @secure()
 param containerRegistryPassword string = ''
 param registryPassword string = 'registry-password'
-
 
 // Container Apps Environment 
 module environment 'environment.bicep' = {
@@ -57,7 +56,6 @@ module apim 'api-management.bicep' = if (deployApim) {
   }
 }
 
-
 // Python App
 module pythonService 'container-http.bicep' = {
   name: '${deployment().name}--${pythonServiceAppName}'
@@ -72,7 +70,7 @@ module pythonService 'container-http.bicep' = {
     containerAppName: pythonServiceAppName
     containerImage: pythonImage
     containerPort: pythonPort
-    isPrivateRegistry: isPrivateRegistry 
+    isPrivateRegistry: isPrivateRegistry
     minReplicas: minReplicas
     containerRegistry: containerRegistry
     registryPassword: registryPassword
@@ -87,36 +85,66 @@ module pythonService 'container-http.bicep' = {
   }
 }
 
-resource stateDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-01-01-preview' = {
+// resource stateDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-01-01-preview' = {
+//   name: '${environmentName}/orders'
+//   dependsOn: [
+//     environment
+//   ]
+//   properties: {
+//     componentType: 'state.azure.cosmosdb'
+//     version: 'v1'
+//     secrets: [
+//       {
+//         name: 'masterkey'
+//         value: cosmosdb.outputs.primaryMasterKey
+//       }
+//     ]
+//     metadata: [
+//       {
+//         name: 'url'
+//         value: cosmosdb.outputs.documentEndpoint
+//       }
+//       {
+//         name: 'database'
+//         value: 'ordersDb'
+//       }
+//       {
+//         name: 'collection'
+//         value: 'orders'
+//       }
+//       {
+//         name: 'masterkey'
+//         secretRef: 'masterkey'
+//       }
+//     ]
+//     scopes: [
+//       pythonServiceAppName
+//     ]
+//   }
+// }
+
+resource stateDaprComponentswap 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
   name: '${environmentName}/orders'
   dependsOn: [
     environment
   ]
   properties: {
-    componentType: 'state.azure.cosmosdb'
+    componentType: 'state.azure.blobstorage'
     version: 'v1'
     secrets: [
       {
-        name: 'masterkey'
-        value: cosmosdb.outputs.primaryMasterKey
+        name: 'accountKey'
+        value: ''
       }
     ]
     metadata: [
       {
-        name: 'url'
-        value: cosmosdb.outputs.documentEndpoint
+        name: 'accountName'
+        value: 'stgaiwcloudnativedemo2'
       }
       {
-        name: 'database'
-        value: 'ordersDb'
-      }
-      {
-        name: 'collection'
+        name: 'containerName'
         value: 'orders'
-      }
-      {
-        name: 'masterkey'
-        secretRef: 'masterkey'
       }
     ]
     scopes: [
@@ -124,7 +152,6 @@ resource stateDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@20
     ]
   }
 }
-
 // Go App
 module goService 'container-http.bicep' = {
   name: '${deployment().name}--${goServiceAppName}'
@@ -153,7 +180,6 @@ module goService 'container-http.bicep' = {
   }
 }
 
-
 // Node App
 module nodeService 'container-http.bicep' = {
   name: '${deployment().name}--${nodeServiceAppName}'
@@ -161,7 +187,7 @@ module nodeService 'container-http.bicep' = {
     environment
   ]
   params: {
-    enableIngress: true 
+    enableIngress: true
     isExternalIngress: true
     location: location
     environmentName: environmentName
@@ -169,7 +195,7 @@ module nodeService 'container-http.bicep' = {
     containerImage: nodeImage
     containerPort: nodePort
     minReplicas: minReplicas
-    isPrivateRegistry: isPrivateRegistry 
+    isPrivateRegistry: isPrivateRegistry
     containerRegistry: containerRegistry
     registryPassword: registryPassword
     containerRegistryUsername: containerRegistryUsername
