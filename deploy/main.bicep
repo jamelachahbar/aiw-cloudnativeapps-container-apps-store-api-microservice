@@ -123,6 +123,7 @@ module pythonService 'container-http.bicep' = {
 //   }
 // }
 
+//https://docs.dapr.io/reference/components-reference/supported-state-stores/setup-azure-blobstorage/
 resource stateDaprComponentswap 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
   name: '${environmentName}/orders'
   dependsOn: [
@@ -132,16 +133,16 @@ resource stateDaprComponentswap 'Microsoft.App/managedEnvironments/daprComponent
     componentType: 'state.azure.blobstorage'
     version: 'v1'
     secrets: [
-      {
-        name: 'azureClientSecret'
-        value: 'Wy38Q~V9uQS1d29jeuibcNWr6cYAdRL26ak_CcBh'
-      }
       // {
       //   name: 'accountKey'
       //   value: 'dODZJ69+1QXSv9AMqkHS5tK0x88lqwTFWY92WmsRbTU1ObX1401TyjL2XFRmQdhXazPT9hYyl3vtYXfih/Ir6g=='
       // }
     ]
     metadata: [
+      {
+        name: 'azureClientSecret'
+        value: 'Wy38Q~V9uQS1d29jeuibcNWr6cYAdRL26ak_CcBh'
+      }
       {
         name: 'accountName'
         value: 'stgaiwcloudnativedemo2'
