@@ -192,7 +192,7 @@ module goService 'container-http.bicep' = {
   }
 }
 
-// Node App
+// Node App Test
 module nodeService 'container-http.bicep' = {
   name: '${deployment().name}--${nodeServiceAppName}'
   dependsOn: [
