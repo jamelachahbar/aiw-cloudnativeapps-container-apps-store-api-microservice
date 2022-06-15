@@ -85,66 +85,36 @@ module pythonService 'container-http.bicep' = {
   }
 }
 
-// resource stateDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-01-01-preview' = {
-//   name: '${environmentName}/orders'
-//   dependsOn: [
-//     environment
-//   ]
-//   properties: {
-//     componentType: 'state.azure.cosmosdb'
-//     version: 'v1'
-//     secrets: [
-//       {
-//         name: 'masterkey'
-//         value: cosmosdb.outputs.primaryMasterKey
-//       }
-//     ]
-//     metadata: [
-//       {
-//         name: 'url'
-//         value: cosmosdb.outputs.documentEndpoint
-//       }
-//       {
-//         name: 'database'
-//         value: 'ordersDb'
-//       }
-//       {
-//         name: 'collection'
-//         value: 'orders'
-//       }
-//       {
-//         name: 'masterkey'
-//         secretRef: 'masterkey'
-//       }
-//     ]
-//     scopes: [
-//       pythonServiceAppName
-//     ]
-//   }
-// }
-
-//https://docs.dapr.io/reference/components-reference/supported-state-stores/setup-azure-blobstorage/
-resource stateDaprComponentswap 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
+resource stateDaprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-01-01-preview' = {
   name: '${environmentName}/orders'
   dependsOn: [
     environment
   ]
   properties: {
-    componentType: 'state.azure.blobstorage'
+    componentType: 'state.azure.cosmosdb'
     version: 'v1'
-    secrets: []
+    secrets: [
+      {
+        name: 'masterkey'
+        value: cosmosdb.outputs.primaryMasterKey
+      }
+    ]
     metadata: [
       {
-        name: 'accountKey'
-        value: 'dODZJ69+1QXSv9AMqkHS5tK0x88lqwTFWY92WmsRbTU1ObX1401TyjL2XFRmQdhXazPT9hYyl3vtYXfih/Ir6g=='
+        name: 'url'
+        value: cosmosdb.outputs.documentEndpoint
       }
       {
-        name: 'accountName'
-        value: 'stgaiwcloudnativedemo2'
+        name: 'database'
+        value: 'ordersDb'
       }
       {
-        name: 'containerName'
+        name: 'collection'
         value: 'orders'
+      }
+      {
+        name: 'masterkey'
+        secretRef: 'masterkey'
       }
     ]
     scopes: [
@@ -152,6 +122,36 @@ resource stateDaprComponentswap 'Microsoft.App/managedEnvironments/daprComponent
     ]
   }
 }
+
+//https://docs.dapr.io/reference/components-reference/supported-state-stores/setup-azure-blobstorage/
+// resource stateDaprComponentswap 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
+//   name: '${environmentName}/orders'
+//   dependsOn: [
+//     environment
+//   ]
+//   properties: {
+//     componentType: 'state.azure.blobstorage'
+//     version: 'v1'
+//     secrets: []
+//     metadata: [
+//       {
+//         name: 'accountKey'
+//         value: 'dODZJ69+1QXSv9AMqkHS5tK0x88lqwTFWY92WmsRbTU1ObX1401TyjL2XFRmQdhXazPT9hYyl3vtYXfih/Ir6g=='
+//       }
+//       {
+//         name: 'accountName'
+//         value: 'stgaiwcloudnativedemo2'
+//       }
+//       {
+//         name: 'containerName'
+//         value: 'orders'
+//       }
+//     ]
+//     scopes: [
+//       pythonServiceAppName
+//     ]
+//   }
+// }
 // Go App
 module goService 'container-http.bicep' = {
   name: '${deployment().name}--${goServiceAppName}'
